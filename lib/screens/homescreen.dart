@@ -138,6 +138,45 @@ class Homescreen extends StatelessWidget {
                             ),
                             child: Image.asset("assets/images/promo.png"),
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(
+                          //     vertical: 50.0,
+                          //     horizontal: 20,
+                          //   ),
+                          //   child: Image.asset(
+                          //     "assets/images/byeonegetonefree.png",
+                          //   ),
+                          // ),
+                          Positioned(
+                            bottom: 63,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                              ),
+                              child: Container(
+                                height: 20,
+                                width: 140,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.7),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 40,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                              ),
+                              child: Container(
+                                height: 20,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.7),
+                                ),
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 50.0,
@@ -147,8 +186,6 @@ class Homescreen extends StatelessWidget {
                               "assets/images/byeonegetonefree.png",
                             ),
                           ),
-
-                         
                         ],
                       ),
                     ),
@@ -180,7 +217,6 @@ class Homescreen extends StatelessWidget {
                         coffee[index]['name']!,
                         style: GoogleFonts.sora(
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
                           color: index == 0 ? Colors.white : Colors.black,
                         ),
                       ),
