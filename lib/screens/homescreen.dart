@@ -2,9 +2,15 @@ import 'package:cafe/screens/detail_item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Homescreen extends StatelessWidget {
+class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
 
+  @override
+  State<Homescreen> createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,15 +144,6 @@ class Homescreen extends StatelessWidget {
                             ),
                             child: Image.asset("assets/images/promo.png"),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(
-                          //     vertical: 50.0,
-                          //     horizontal: 20,
-                          //   ),
-                          //   child: Image.asset(
-                          //     "assets/images/byeonegetonefree.png",
-                          //   ),
-                          // ),
                           Positioned(
                             bottom: 63,
                             child: Padding(
@@ -203,21 +200,29 @@ class Homescreen extends StatelessWidget {
                 itemCount: coffee.length,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(right: 15),
-                    width: 87,
-                    decoration: BoxDecoration(
-                      color: index == 0
-                          ? const Color(0xffC67C4E)
-                          : const Color(0xffEDEDED),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Center(
-                      child: Text(
-                        coffee[index]['name']!,
-                        style: GoogleFonts.sora(
-                          fontSize: 14,
-                          color: index == 0 ? Colors.white : Colors.black,
+                  final isSelected = selectedIndex == index;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      width: 87,
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? const Color(0xffC67C4E)
+                            : const Color(0xffEDEDED),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Center(
+                        child: Text(
+                          coffee[index]['name']!,
+                          style: GoogleFonts.sora(
+                            fontSize: 14,
+                            color: isSelected ? Colors.white : Colors.black,
+                          ),
                         ),
                       ),
                     ),
