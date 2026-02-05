@@ -1,6 +1,9 @@
+import 'package:cafe/model/coffee_model.dart';
+import 'package:cafe/provider/coffee_provider.dart';
 import 'package:cafe/screens/detail_item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -90,26 +93,16 @@ class _HomescreenState extends State<Homescreen> {
                                 ),
                               ),
                               const SizedBox(width: 15),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => DetailItemScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  height: 55,
-                                  width: 55,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffC67C4E),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: const Icon(
-                                    Icons.tune,
-                                    color: Colors.white,
-                                  ),
+                              Container(
+                                height: 55,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffC67C4E),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(
+                                  Icons.tune,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
@@ -245,63 +238,73 @@ class _HomescreenState extends State<Homescreen> {
                 mainAxisExtent: 260,
               ),
               itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          items[index]['image']!,
-                          fit: BoxFit.contain,
+                final coffee = items[index];
+                return GestureDetector(
+                  onTap: () {
+                    Provider.of<CoffeeProvider>(
+                      context,
+                      listen: false,
+                    ).selectCoffee(coffee);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => DetailItemScreen()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Image.asset(coffee.image, fit: BoxFit.contain),
                         ),
-                      ),
 
-                      SizedBox(height: 12),
+                        SizedBox(height: 12),
 
-                      Text(
-                        items[index]['title']!,
-                        style: GoogleFonts.sora(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        items[index]['subtitle']!,
-                        style: GoogleFonts.sora(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      Row(
-                        children: [
-                          Text(
-                            items[index]['price']!,
-                            style: GoogleFonts.sora(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        Text(
+                          coffee.title,
+                          style: GoogleFonts.sora(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
-                          Spacer(),
-                          Container(
-                            height: 32,
-                            width: 32,
-                            decoration: BoxDecoration(
-                              color: Color(0xffC67C4E),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(Icons.add, color: Colors.white),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          coffee.subtitle,
+                          style: GoogleFonts.sora(
+                            fontSize: 12,
+                            color: Colors.grey,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        Row(
+                          children: [
+                            Text(
+                              coffee.price,
+                              style: GoogleFonts.sora(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                color: Color(0xffC67C4E),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(Icons.add, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -322,53 +325,113 @@ final List<Map<String, String>> coffee = [
   {'name': "Americano"},
 ];
 
-final List<Map<String, String>> items = [
-  {
-    'image': "assets/images/cafemocha.png",
-    'title': "Caffe Mocha",
-    'subtitle': "Deep Foam",
-    'price': "\$4.53",
-  },
-  {
-    'image': "assets/images/flatwhite.png",
-    'title': "Flat White",
-    'subtitle': "Espresso",
-    'price': "\$3.35",
-  },
-  {
-    'image': "assets/images/cafemocha.png",
-    'title': "Caffe Mocha",
-    'subtitle': "Deep Foam",
-    'price': "\$4.53",
-  },
-  {
-    'image': "assets/images/flatwhite.png",
-    'title': "Flat White",
-    'subtitle': "Espresso",
-    'price': "\$3.35",
-  },
-  {
-    'image': "assets/images/cafemocha.png",
-    'title': "Caffe Mocha",
-    'subtitle': "Deep Foam",
-    'price': "\$4.53",
-  },
-  {
-    'image': "assets/images/flatwhite.png",
-    'title': "Caffe Mocha",
-    'subtitle': "Deep Foam",
-    'price': "\$4.53",
-  },
-  {
-    'image': "assets/images/cafemocha.png",
-    'title': "Caffe Mocha",
-    'subtitle': "Deep Foam",
-    'price': "\$4.53",
-  },
-  {
-    'image': "assets/images/flatwhite.png",
-    'title': "Caffe Mocha",
-    'subtitle': "Deep Foam",
-    'price': "\$4.53",
-  },
+final List<CoffeeModel> items = [
+  // {
+  //   'image': "assets/images/cafemocha.png",
+  //   'title': "Caffe Mocha",
+  //   'subtitle': "Deep Foam",
+  //   'price': "\$4.53",
+  // },
+  // {
+  //   'image': "assets/images/flatwhite.png",
+  //   'title': "Flat White",
+  //   'subtitle': "Espresso",
+  //   'price': "\$3.35",
+  // },
+  // {
+  //   'image': "assets/images/cafemocha.png",
+  //   'title': "Cafe Machiato",
+  //   'subtitle': "Deep Foam",
+  //   'price': "\$4.53",
+  // },
+  // {
+  //   'image': "assets/images/flatwhite.png",
+  //   'title': "Latte",
+  //   'subtitle': "Espresso",
+  //   'price': "\$3.35",
+  // },
+  // {
+  //   'image': "assets/images/cafemocha.png",
+  //   'title': "Americano",
+  //   'subtitle': "Deep Foam",
+  //   'price': "\$4.53",
+  // },
+  // {
+  //   'image': "assets/images/flatwhite.png",
+  //   'title': "Caffe Mocha",
+  //   'subtitle': "Deep Foam",
+  //   'price': "\$4.53",
+  // },
+  // {
+  //   'image': "assets/images/cafemocha.png",
+  //   'title': "Caffe Mocha",
+  //   'subtitle': "Deep Foam",
+  //   'price': "\$4.53",
+  // },
+  // {
+  //   'image': "assets/images/flatwhite.png",
+  //   'title': "Caffe Mocha",
+  //   'subtitle': "Deep Foam",
+  //   'price': "\$4.53",
+  // },
+  CoffeeModel(
+    image: "assets/images/cafemocha.png",
+    title: "Caffe Mocha",
+    subtitle: "Ice/Hot",
+    price: "\$5.34",
+    description:
+        "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+    rating: "4.8 ",
+    readMoreColor: Color(0xffC67C4E),
+  ),
+  CoffeeModel(
+    image: "assets/images/flatwhite.png",
+    title: "Flat White",
+    subtitle: "Ice/Hot",
+    price: "\$3.35",
+    description:
+        "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+    rating: "4.8 ",
+    readMoreColor: Color(0xffC67C4E),
+  ),
+  CoffeeModel(
+    image: "assets/images/cafemocha.png",
+    title: "Latte",
+    subtitle: "Ice/Hot",
+    price: "\$5.34",
+    description:
+        "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+    rating: "4.8 ",
+    readMoreColor: Color(0xffC67C4E),
+  ),
+  CoffeeModel(
+    image: "assets/images/flatwhite.png",
+    title: "Cafe Machiato",
+    subtitle: "Ice/Hot",
+    price: "\$5.34",
+    description:
+        "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+    rating: "4.8 ",
+    readMoreColor: Color(0xffC67C4E),
+  ),
+  CoffeeModel(
+    image: "assets/images/cafemocha.png",
+    title: "Americano",
+    subtitle: "Ice/Hot",
+    price: "\$5.34",
+    description:
+        "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+    rating: "4.8,",
+    readMoreColor: Color(0xffC67C4E),
+  ),
+  CoffeeModel(
+    image: "assets/images/flatwhite.png",
+    title: "Caffe Mocha",
+    subtitle: "Ice/Hot",
+    price: "\$5.34",
+    description:
+        "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
+    rating: "4.8 ",
+    readMoreColor: Color(0xffC67C4E),
+  ),
 ];
